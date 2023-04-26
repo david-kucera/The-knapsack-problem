@@ -20,5 +20,6 @@ public class Main {
         }
 
         int[] result = Algorithm.getResult(a, c, z, r, K, n);
+        System.out.println(Arrays.toString(result));
     }
 }
