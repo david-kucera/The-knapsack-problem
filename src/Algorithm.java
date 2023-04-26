@@ -1,17 +1,21 @@
+import java.util.ArrayList;
+
 public class Algorithm {
     public static int[] getResult(int[] a, int[] c, int[] z, int r, int K, int n) {
 
-//        System.out.println(r);
-//        System.out.println(sum(z));
-//        System.out.println(K);
-//        System.out.println(sum(a,z));
+        ArrayList<Integer> naPrehladanie = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            naPrehladanie.add(a[i]);
+        }
+
         // hmotnosť batohu musí byť aspoň K a počet predmetov v batohu aspoň r
-        while ( (r <= sum(z)) && (K <= sum(a, z)) ) {
-            int lowestA = findLowestA(a);
-            System.out.println(lowestA);
-            int indexLowestA = getIndex(lowestA, a);
-            System.out.println(lowestA);
-            z[indexLowestA] = 0; // vyhodim-nezaradim prvok s najmensou hmotnostou
+        while ( (r < sum(z)) && (K <= sum(a, z)) ) {
+            int lowestA = findLowestA(naPrehladanie);
+            int indexLowestA = getIndex(lowestA, naPrehladanie);
+
+            // vyhodim-nezaradim prvok s najmensou hmotnostou
+            z[indexLowestA] = 0;
+            naPrehladanie.remove(indexLowestA);
         }
 
         // tu je uz konecne riesenie
@@ -19,17 +23,17 @@ public class Algorithm {
         return z;
     }
 
-    private static int getIndex(int lowestA, int[] a) {
-        for (int i = 0; i < a.length; i++) {
-            if (a[i] == lowestA) return i;
+    private static int getIndex(int lowestA, ArrayList<Integer> naPrehladanie) {
+        for (int i = 0; i < naPrehladanie.size(); i++) {
+            if (naPrehladanie.get(i) == lowestA) return i;
         }
         return -1;
     }
 
-    private static int findLowestA(int[] a) {
-        int min = a[0];
-        for (int i = 0; i < a.length; i++) {
-            if (min > a[i]) min = a[i];
+    private static int findLowestA(ArrayList<Integer> naPrehladanie) {
+        int min = naPrehladanie.get(0);
+        for (int i = 0; i < naPrehladanie.size(); i++) {
+            if (min > naPrehladanie.get(i)) min = naPrehladanie.get(i);
         }
         return min;
     }
