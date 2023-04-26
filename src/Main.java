@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Main {
@@ -17,12 +16,12 @@ public class Main {
             z[i] = 1;
         }
 
-        // --- VYPIS VYSLEDKOV HEURISTIKY ---
 
-        int[] result = Algorithm.getResult(a, c, z, r, K, n);
-        System.out.println(Arrays.toString(result));
 
-        System.out.println("Vysledne hodnoty batoha po heuristike: ");
+
+        // --- VYPIS PRED HEURISTIKOU ---
+
+        System.out.println("===Vychodzie hodnoty batoha pred heuristikou===");
         int totalZ = 0;
         for (int i = 0; i < z.length; i++) {
             totalZ += z[i];
@@ -40,5 +39,33 @@ public class Main {
             totalC += z[i] * c[i];
         }
         System.out.println("Celkova hodnota ucelovej funkcie: " + totalC);
+        System.out.println();
+
+
+
+
+
+        // --- VYPIS VYSLEDKOV HEURISTIKY ---
+
+        int[] result = Algorithm.getResult(a, c, z, r, K, n);
+
+        System.out.println("===Vysledne hodnoty batoha po heuristike===");
+        int _totalZ = 0;
+        for (int i = 0; i < z.length; i++) {
+            _totalZ += z[i];
+        }
+        System.out.println("Pocet prvkov v batohu: " + _totalZ);
+
+        int _totalA = 0;
+        for (int i = 0; i < a.length; i++) {
+            _totalA += z[i] * a[i];
+        }
+        System.out.println("Hmnotnost batohu: " + _totalA);
+
+        int _totalC = 0;
+        for (int i = 0; i < c.length; i++) {
+            _totalC += z[i] * c[i];
+        }
+        System.out.println("Celkova hodnota ucelovej funkcie: " + _totalC);
     }
 }

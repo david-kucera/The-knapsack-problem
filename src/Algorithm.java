@@ -11,23 +11,14 @@ public class Algorithm {
         // hmotnosť batohu musí byť aspoň K a počet predmetov v batohu aspoň r
         while ( (r < sum(z)) && (K <= sum(a, z)) ) {
             int lowestA = findLowestA(naPrehladanie);
-            int indexLowestA = getIndex(lowestA, naPrehladanie);
+            int indexLowestA = naPrehladanie.indexOf(lowestA);
 
-            // vyhodim-nezaradim prvok s najmensou hmotnostou
+            // nezaradim prvok s najmensou hmotnostou
             z[indexLowestA] = 0;
             naPrehladanie.remove(indexLowestA);
         }
 
-        // tu je uz konecne riesenie
-
         return z;
-    }
-
-    private static int getIndex(int lowestA, ArrayList<Integer> naPrehladanie) {
-        for (int i = 0; i < naPrehladanie.size(); i++) {
-            if (naPrehladanie.get(i) == lowestA) return i;
-        }
-        return -1;
     }
 
     private static int findLowestA(ArrayList<Integer> naPrehladanie) {
