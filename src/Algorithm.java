@@ -3,28 +3,47 @@ import java.util.ArrayList;
 public class Algorithm {
     public static int[] getResult(int[] a, int[] c, int[] z, int r, int K, int n) {
 
-        ArrayList<Integer> naPrehladanie = new ArrayList<>();
+        ArrayList<Integer> vyhodeneHmotnosti = new ArrayList<Integer>();
+        ArrayList<Integer> vyhodeneCeny = new ArrayList<Integer>();
+
+        int[] p = new int[n];
         for (int i = 0; i < n; i++) {
-            naPrehladanie.add(a[i]);
+            p[i] = a[i];
         }
 
         // hmotnosť batohu musí byť aspoň K a počet predmetov v batohu aspoň r
         while ( (r < sum(z)) && (K <= sum(a, z)) ) {
-            int lowestA = findLowestA(naPrehladanie);
-            int indexLowestA = naPrehladanie.indexOf(lowestA);
+            int lowestA = findLowestA(p);
+            int indexLowestA = getIndexOf(lowestA, p);
+
+            vyhodeneHmotnosti.add(a[indexLowestA]);
+            vyhodeneCeny.add(c[indexLowestA]);
 
             // nezaradim prvok s najmensou hmotnostou
             z[indexLowestA] = 0;
-            naPrehladanie.remove(indexLowestA);
+            p[indexLowestA] = -1;
         }
+
+        // TODO zlepsenie algoritmu ak budem vyberat najskor tie prvky, ktore maju vyssiu cenu, kedze chcem minimalizovat UF
+
+        System.out.println(vyhodeneHmotnosti);
+        System.out.println(vyhodeneCeny);
 
         return z;
     }
 
-    private static int findLowestA(ArrayList<Integer> naPrehladanie) {
-        int min = naPrehladanie.get(0);
-        for (int i = 0; i < naPrehladanie.size(); i++) {
-            if (min > naPrehladanie.get(i)) min = naPrehladanie.get(i);
+    private static int getIndexOf(int lowestA, int[] p) {
+        for (int i = 0; i < p.length; i++) {
+            if (p[i] == lowestA) return i;
+        }
+        return  -1;
+    }
+
+    private static int findLowestA(int[] p) {
+        int min = p[0];
+        for (int i = 0; i < p.length; i++) {
+            if (p[i] == -1) continue;
+            if (min > p[i]) min = p[i];
         }
         return min;
     }
