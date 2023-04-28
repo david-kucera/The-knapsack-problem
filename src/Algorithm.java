@@ -2,9 +2,7 @@ public class Algorithm {
     public static int[] getResult(int[] hmotnosti, int[] ceny, int[] zaradene, int r, int K, int n) {
 
         int[] prehladane = new int[n];
-        for (int i = 0; i < n; i++) {
-            prehladane[i] = hmotnosti[i];
-        }
+        System.arraycopy(hmotnosti, 0, prehladane, 0, n);
 
         // hmotnosť batohu musí byť aspoň K a počet predmetov v batohu aspoň r
         while ( (r < sum(zaradene)) && (K < sum(hmotnosti, zaradene)) ) {
