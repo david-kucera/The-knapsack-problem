@@ -1,35 +1,24 @@
-import java.util.ArrayList;
-
 public class Algorithm {
-    public static int[] getResult(int[] a, int[] c, int[] z, int r, int K, int n) {
+    public static int[] getResult(int[] hmotnosti, int[] ceny, int[] zaradene, int r, int K, int n) {
 
-        ArrayList<Integer> vyhodeneHmotnosti = new ArrayList<Integer>();
-        ArrayList<Integer> vyhodeneCeny = new ArrayList<Integer>();
-
-        int[] p = new int[n];
+        int[] prehladane = new int[n];
         for (int i = 0; i < n; i++) {
-            p[i] = a[i];
+            prehladane[i] = hmotnosti[i];
         }
 
         // hmotnosť batohu musí byť aspoň K a počet predmetov v batohu aspoň r
-        while ( (r < sum(z)) && (K <= sum(a, z)) ) {
-            int lowestA = findLowestA(p);
-            int indexLowestA = getIndexOf(lowestA, p);
-
-            vyhodeneHmotnosti.add(a[indexLowestA]);
-            vyhodeneCeny.add(c[indexLowestA]);
+        while ( (r < sum(zaradene)) && (K < sum(hmotnosti, zaradene)) ) {
+            int lowestA = findLowestA(prehladane);
+            int indexLowestA = getIndexOf(lowestA, prehladane);
 
             // nezaradim prvok s najmensou hmotnostou
-            z[indexLowestA] = 0;
-            p[indexLowestA] = -1;
+            zaradene[indexLowestA] = 0;
+            prehladane[indexLowestA] = -1;
         }
 
         // TODO zlepsenie algoritmu ak budem vyberat najskor tie prvky, ktore maju vyssiu cenu, kedze chcem minimalizovat UF
 
-        System.out.println(vyhodeneHmotnosti);
-        System.out.println(vyhodeneCeny);
-
-        return z;
+        return zaradene;
     }
 
     private static int getIndexOf(int lowestA, int[] p) {
