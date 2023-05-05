@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.sql.SQLOutput;
 
 public class Main {
 
@@ -11,10 +12,13 @@ public class Main {
         int kapacita_batoh = 9500;
         int[] zaradene = new int[pocet_prvkov];
 
-        // Zaradim vsetky predmety do batoha - vzchodzie riesenie
+        // Zaradim vsetky predmety do batoha - vychodzie riesenie
         for (int i = 0; i < pocet_prvkov; i++) {
             zaradene[i] = 1;
         }
+
+        // * lokálne kritérium: *
+        // „Odstráň prvok z dosiaľ nespracovaných prvkov, ktorý má najmenšiu hmotnosť“.
 
         // --- VYPIS PRED HEURISTIKOU ---
 
@@ -38,9 +42,12 @@ public class Main {
         System.out.println("Celkova hodnota ucelovej funkcie: " + totalC);
         System.out.println();
 
-        // --- VYPIS VYSLEDKOV HEURISTIKY ---
+        // --- VYPIS VYSLEDKOV  HEURISTIKY ---
 
-        int[] result = Algorithm.getResult(hmotnosti, ceny, zaradene, pocet_batoh, kapacita_batoh, pocet_prvkov);
+        int[] result = Algorithm.getResult(hmotnosti, zaradene, pocet_batoh, kapacita_batoh, pocet_prvkov);
+
+        // ODKOMENTUJ TENTO RIADOK PRE ZLEPSENIE VYSLEDKOV HEURISTIKY
+        //int[] result = Algorithm.getBetterResult(hmotnosti, zaradene, ceny, pocet_batoh, kapacita_batoh, pocet_prvkov);
 
         System.out.println("===Vysledne hodnoty batoha po heuristike===");
         int _pocetPrvkov_celkovo = 0;
@@ -60,7 +67,6 @@ public class Main {
             _hodnota_uf_celkovo += result[i] * ceny[i];
         }
         System.out.println("Celkova hodnota ucelovej funkcie: " + _hodnota_uf_celkovo);
-
 
         int[] indexy_zaradenych = new int[_pocetPrvkov_celkovo];
         int index = 0;
