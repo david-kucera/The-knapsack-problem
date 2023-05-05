@@ -68,7 +68,7 @@ public class Main {
         int[] indexy_zaradenych = new int[_pocetPrvkov_celkovo];
         int index = 0;
         for (int i = 0; i < result.length; i++) {
-            if (result[i] != 0) {
+            if (result[i] == 1) {
                 indexy_zaradenych[index] = i;
                 index++;
             }
@@ -78,6 +78,7 @@ public class Main {
         try {
             Output.save(indexy_zaradenych, _pocetPrvkov_celkovo, _hmotnost_celkovo, _hodnota_uf_celkovo, "src/R.txt");
         } catch (IOException e) {
+            System.out.println("Problem when writing output to file.");
             e.printStackTrace();
         }
     }
