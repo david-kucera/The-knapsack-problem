@@ -1,10 +1,9 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class Algorithm {
     /*
-     * Klasicka heuristika podla zadania
+     * Klasická heuristika podľa zadania.
      */
     public static int[] getResult(int[] hmotnosti, int[] zaradene, int r, int K, int n) {
 
@@ -16,14 +15,17 @@ public class Algorithm {
             int lowestA = findLowestA(prehladane);
             int indexLowestA = getIndexOf(lowestA, prehladane);
 
-            // nezaradim prvok s najmensou hmotnostou
+            // nezaradím prvok s najmenšou hmotnosťou
             zaradene[indexLowestA] = 0;
             prehladane[indexLowestA] = -1;
         }
 
-        return zaradene; // vratim pole indexov prvkov <0,1> o zaradeni
+        return zaradene; // vrátim pole indexov prvkov <0,1> o zaradení
     }
 
+    /*
+     * Vylepšenie pôvodnej heuristiky.
+     */
     public static int[] getBetterResult(int[] hmotnosti, int[] zaradene, int[] ceny, int r, int K, int n) {
 
         int[] prehladane = new int[n];
@@ -31,12 +33,12 @@ public class Algorithm {
 
         // hmotnosť batohu musí byť aspoň K a počet predmetov v batohu aspoň r
         while ( (r < sum(zaradene)) && (K < sum(hmotnosti, zaradene)) ) {
-            // Najdem najmensiu hodnotu hmotnosti spomedzi prvkov
+            // Nájdem najmenšiu hodnotu hmotnosti spomedzi prvkov
             int lowestA = findLowestA(prehladane);
-            // Nasledne najdem index toho prvku, ktory ma danu hmotnost a zaroven maximalnu cenu, kedze minimalizujem UF
+            // Následne nájdem index toho prvku, ktorý má danú hmotnosť a zároveň maximálnu cenu, keďže minimalizujem ÚF
             int indexLowestA = getIndexOfWithLowestPrice(lowestA, prehladane, ceny);
 
-            // nezaradim prvok s najmensou hmotnostou a maximalnou cenou spomedzi rovnakych hodnot
+            // nezaradím prvok s najmenšou hmotnosťou a maximálnou cenou spomedzi rovnakých hodnôt
             zaradene[indexLowestA] = 0;
             prehladane[indexLowestA] = -1;
         }
@@ -45,27 +47,30 @@ public class Algorithm {
     }
 
     private static int getIndexOfWithLowestPrice(int lowestA, int[] prehladane, int[] ceny) {
-        // vytvorim si pomocne pole s prvkami, ktore maju rovnaku hmotnost
+        // vytvorím si pomocné polia s prvkami, ktoré majú rovnakú hmotnosť
         ArrayList<Integer> cenyPrvkovSRovnakouHmotnostou = new ArrayList<>();
         ArrayList<Integer> indexyPrvkovSRovnakouHmotnostou = new ArrayList<>();
 
-        // prechadzam vsetky hmotnosti prvkov a hladam prvky s danou najnizsou hmotnostou
+        // prechádzam všetky hmotnosti prvkov a hľadám prvky s danou najnižšou hmotnosťou
         for (int i = 0; i < prehladane.length; i++) {
-            // akonahle najdem prvok s danou hmotnostou, zapisem si jeho index a cenu
+            // akonáhle nájdem prvok s danou hmotnosťou, zapíšem si jeho index a cenu
             if (lowestA == prehladane[i]) {
                 indexyPrvkovSRovnakouHmotnostou.add(i);
                 cenyPrvkovSRovnakouHmotnostou.add(ceny[i]);
             }
         }
 
-        // akonahle som dohladal, spomedzi nich najdem prvok s NAJVACSOU cenou, kedze MINIMALIZUJEM ucelovu funkciu
+        // akonáhle som dohľadal, spomedzi nich nájdem prvok s NAJVAČŠOU cenou, keďže MINIMALIZUJEM účelovú funkciu
         int maxCena = Collections.max(cenyPrvkovSRovnakouHmotnostou);
         int index = cenyPrvkovSRovnakouHmotnostou.indexOf(maxCena);
 
-        // a vratim index vramci prehladanych hmotnosti
+        // a vrátim index vrámci prehľadaných hmotností
         return indexyPrvkovSRovnakouHmotnostou.get(index);
     }
 
+    /*
+     * Metóda vráti prvý index vrámci poľa hľadaného prvku.
+     */
     private static int getIndexOf(int lowestA, int[] p) {
         for (int i = 0; i < p.length; i++) {
             if (p[i] == lowestA) return i;
@@ -73,15 +78,21 @@ public class Algorithm {
         return  -1;
     }
 
+    /*
+     * Metóda vráti hodnotu najmenšieho prvku daného poľa.
+     */
     private static int findLowestA(int[] p) {
         int min = p[0];
-        for (int i = 0; i < p.length; i++) {
-            if (p[i] == -1) continue;
-            if (min > p[i]) min = p[i];
+        for (int j : p) {
+            if (j == -1) continue;
+            if (min > j) min = j;
         }
         return min;
     }
 
+    /*
+     * Metóda sčíta sumu hmotností zaradených predmetov v batohu.
+     */
     private static int sum(int[] a, int[] z) {
         int sum = 0;
         for (int i = 0; i < z.length; i++) {
@@ -90,10 +101,13 @@ public class Algorithm {
         return sum;
     }
 
+    /*
+     * Metóda sčíta počet zaradených prvkov v batohu.
+     */
     private static int sum(int[] z) {
         int sum = 0;
-        for (int i = 0; i < z.length; i++) {
-            sum += z[i];
+        for (int j : z) {
+            sum += j;
         }
         return sum;
     }

@@ -3,6 +3,10 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Input {
+
+    /*
+     * Statická metóda, ktorá načíta hodnoty zo súboru do poľa.
+     */
     public static int[] read(String pathToFile) {
         int[] values = new int[500];
         int index = 0;

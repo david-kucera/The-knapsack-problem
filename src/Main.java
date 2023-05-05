@@ -1,8 +1,6 @@
 import java.io.IOException;
-import java.sql.SQLOutput;
 
 public class Main {
-
     public static void main(String[] args) {
         int[] hmotnosti = Input.read("src/H3_a.txt");
         int[] ceny = Input.read("src/H3_c.txt");
@@ -12,7 +10,7 @@ public class Main {
         int kapacita_batoh = 9500;
         int[] zaradene = new int[pocet_prvkov];
 
-        // Zaradim vsetky predmety do batoha - vychodzie riesenie
+        // Zaradím všetky predmety do batoha - východzie riešenie
         for (int i = 0; i < pocet_prvkov; i++) {
             zaradene[i] = 1;
         }
@@ -20,12 +18,12 @@ public class Main {
         // * lokálne kritérium: *
         // „Odstráň prvok z dosiaľ nespracovaných prvkov, ktorý má najmenšiu hmotnosť“.
 
-        // --- VYPIS PRED HEURISTIKOU ---
+        // --- VÝPIS PRED HEURISTIKOU ---
 
         System.out.println("===Vychodzie hodnoty batoha pred heuristikou===");
         int totalZ = 0;
-        for (int i = 0; i < zaradene.length; i++) {
-            totalZ += zaradene[i];
+        for (int j : zaradene) {
+            totalZ += j;
         }
         System.out.println("Pocet prvkov v batohu: " + totalZ);
 
@@ -42,17 +40,16 @@ public class Main {
         System.out.println("Celkova hodnota ucelovej funkcie: " + totalC);
         System.out.println();
 
-        // --- VYPIS VYSLEDKOV  HEURISTIKY ---
+        // --- VÝPIS VÝSLEDKOV  HEURISTIKY ---
 
         int[] result = Algorithm.getResult(hmotnosti, zaradene, pocet_batoh, kapacita_batoh, pocet_prvkov);
-
-        // ODKOMENTUJ TENTO RIADOK PRE ZLEPSENIE VYSLEDKOV HEURISTIKY
-        //int[] result = Algorithm.getBetterResult(hmotnosti, zaradene, ceny, pocet_batoh, kapacita_batoh, pocet_prvkov);
+        // ODKOMENTUJ TENTO RIADOK PRE ZLEPŠENIE VÝSLEDKOV HEURISTIKY A ZAKOMENTUJ RIADOK VYŠŠIE
+//        int[] result = Algorithm.getBetterResult(hmotnosti, zaradene, ceny, pocet_batoh, kapacita_batoh, pocet_prvkov);
 
         System.out.println("===Vysledne hodnoty batoha po heuristike===");
         int _pocetPrvkov_celkovo = 0;
-        for (int i = 0; i < result.length; i++) {
-            _pocetPrvkov_celkovo += result[i];
+        for (int j : result) {
+            _pocetPrvkov_celkovo += j;
         }
         System.out.println("Pocet prvkov v batohu: " + _pocetPrvkov_celkovo);
 
@@ -71,14 +68,13 @@ public class Main {
         int[] indexy_zaradenych = new int[_pocetPrvkov_celkovo];
         int index = 0;
         for (int i = 0; i < result.length; i++) {
-            if (result[i] == 0) continue;
-            else {
+            if (result[i] != 0) {
                 indexy_zaradenych[index] = i;
                 index++;
             }
         }
 
-        // Zapis do suboru
+        // Zápis do súboru
         try {
             Output.save(indexy_zaradenych, _pocetPrvkov_celkovo, _hmotnost_celkovo, _hodnota_uf_celkovo, "src/R.txt");
         } catch (IOException e) {

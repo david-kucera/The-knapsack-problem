@@ -5,16 +5,19 @@ import java.util.Arrays;
 
 public class Output {
 
+    /*
+     * Statická metóda, ktorá zapíše do súboru výsledné hodnoty po heuristike.
+     */
     public static void save(int[] indexy_zaradenych, int celk_pocet, int celk_hmot, int hodnota_uf, String path) throws IOException {
         Writer wr = new FileWriter(path);
 
 
-        // Zapis vysledku hodnot
-        wr.write("Hodnota ucelovej funkcie: " + Integer.toString(hodnota_uf) + "\n");
-        wr.write("Pocet zaradenych prvkov: " + Integer.toString(celk_pocet) + "\n");
-        wr.write("Celkova hmotnost batoha: " + Integer.toString(celk_hmot) + "\n");
+        // Zápis výsledku hodnôt
+        wr.write("Hodnota ucelovej funkcie: " + hodnota_uf + "\n");
+        wr.write("Pocet zaradenych prvkov: " + celk_pocet + "\n");
+        wr.write("Celkova hmotnost batoha: " + celk_hmot + "\n");
 
-        // Zapis indexov zaradenych predmetov
+        // Zápis indexov zaradených predmetov
         wr.write(Arrays.toString(indexy_zaradenych));
         wr.close();
     }
